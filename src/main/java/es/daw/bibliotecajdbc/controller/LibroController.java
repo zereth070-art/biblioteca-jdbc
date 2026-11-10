@@ -52,7 +52,7 @@ public class LibroController {
 
         // Con errores no se añade "libros": la vista no muestra la tabla
         if (!result.hasErrors()) {
-            List<LibroDto> libros = libroService.buscar(filtro.getAutorId(), filtro.getEditorial(),  desde, hasta).stream()
+            List<LibroDto> libros = libroService.buscar(filtro.getAutorId(), desde, hasta).stream()
                     .map(libroMapper::toDto)
                     .toList();
             model.addAttribute("libros", libros);

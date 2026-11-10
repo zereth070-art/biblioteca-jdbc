@@ -30,17 +30,6 @@
                 </select>
                 <div class="invalid-feedback" th:errors="*{autorId}">Error</div>
             </div>
-            <div class="col-md-4">
-                <label for="editorial" class="form-label">Editorial</label>
-                <select th:field="*{editorial}" class="form-select"
-                        th:classappend="${#fields.hasErrors('editorial')} ? 'is-invalid'">
-                    <option value="">Todos las editoriales</option>
-                    <option th:each="l : ${editoriales}"
-                            th:value="${l.editorial}"
-                            th:text="${l.editorial}">Editorial</option>
-                </select>
-                <div class="invalid-feedback" th:errors="*{editorial}">Error</div>
-            </div>
             <div class="col-md-2">
                 <label for="anioDesde" class="form-label">Desde</label>
                 <input type="text" inputmode="numeric" th:field="*{anioDesde}" class="form-control"
@@ -77,7 +66,6 @@
                 <tr>
                     <th>ISBN</th>
                     <th>Título</th>
-                    <th>Editorial</th>
                     <th>Autor</th>
                     <th>Publicación</th>
                     <th class="col-accion">Editar</th>
@@ -88,7 +76,6 @@
                 <tr th:each="l : ${libros}">
                     <td th:text="${l.isbn}">ISBN</td>
                     <td th:text="${l.titulo}">Título</td>
-                    <td th:text="${l.editorial}">Editorial</td>
                     <td th:text="${l.autorNombre}">Autor</td>
                     <td th:text="${#temporals.format(l.fechaPublicacion, 'dd/MM/yyyy')}">01/01/2000</td>
                     <td>

@@ -15,7 +15,6 @@ public class LibroMapper {
         dto.setIsbn(libro.getIsbn());
         dto.setEdicion(true);
         dto.setTitulo(libro.getTitulo());
-        dto.setEditorial(libro.getEditorial());
         dto.setAutorId(libro.getAutor().getId());
         dto.setAutorNombre(libro.getAutor().getNombre());
         dto.setFechaPublicacion(libro.getFechaPublicacion());
@@ -30,6 +29,6 @@ public class LibroMapper {
      */
     public Libro toModelEntity(LibroDto dto) {
         Autor autor = new Autor(dto.getAutorId(), null);
-        return new Libro(null, dto.getIsbn(), dto.getTitulo(), dto.getEditorial(), autor, dto.getFechaPublicacion());
+        return new Libro(null, dto.getIsbn(), dto.getTitulo(), autor, dto.getFechaPublicacion());
     }
 }

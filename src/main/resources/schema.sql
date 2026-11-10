@@ -13,7 +13,6 @@ CREATE TABLE libro (
                        id                INT          AUTO_INCREMENT PRIMARY KEY,  -- clave técnica: no se publica
                        isbn              VARCHAR(13)  NOT NULL,                    -- clave de negocio: se guarda como texto
                        titulo            VARCHAR(150) NOT NULL,
-                       editorial         VARCHAR(80)  NOT NULL,
                        autor_id          INT          NOT NULL,
                        fecha_publicacion DATE         NOT NULL,
                        CONSTRAINT uq_libro_isbn UNIQUE (isbn),

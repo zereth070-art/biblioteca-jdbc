@@ -33,13 +33,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="editorial" class="form-label">Editorial</label>
-      <input type="text" th:field="*{editorial}" class="form-control"
-        th:classappend="${#fields.hasErrors('editorial')} ? 'is-invalid'">
-      <div class="invalid-feedback" th:errors="*{editorial}">Error</div>
-    </div>
-
-    <div class="mb-3">
       <label for="autorId" class="form-label">Autor</label>
       <!-- Se envía el id del autor; se muestra su nombre -->
       <select th:field="*{autorId}" class="form-select"

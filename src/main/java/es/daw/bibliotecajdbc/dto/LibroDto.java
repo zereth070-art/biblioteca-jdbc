@@ -31,10 +31,6 @@ public class LibroDto {
     @Size(max = 150, message = "{libro.titulo.tamanio}")
     private String titulo;
 
-    @NotBlank(message = "{libro.editorial.obligatoria}")
-    @Size( max = 80, message = "{libro.editorial.tamanio}")
-    private String editorial;
-
     @NotNull(message = "{libro.autor.obligatorio}")
     private Integer autorId;
 

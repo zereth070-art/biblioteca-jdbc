@@ -23,7 +23,6 @@ public class Libro {
     private Integer id;
     private String isbn;
     private String titulo;
-    private String editorial;
     private Autor autor;
     private LocalDate fechaPublicacion;
 }

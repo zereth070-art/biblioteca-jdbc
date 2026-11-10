@@ -22,7 +22,7 @@ public class LibroRepositoryJdbc implements LibroRepository {
      * Los alias a_id y a_nombre evitan la ambigüedad con el id del libro.
      */
     private static final String SELECT_BASE = """
-            SELECT l.id, l.isbn, l.titulo,l.editorial, l.fecha_publicacion,
+            SELECT l.id, l.isbn, l.titulo, l.fecha_publicacion,
                    a.id AS a_id, a.nombre AS a_nombre
             FROM libro l
             JOIN autor a ON l.autor_id = a.id
@@ -79,16 +79,15 @@ public class LibroRepositoryJdbc implements LibroRepository {
     @Override
     public void save(Libro libro) {
         String sql = """
-                INSERT INTO libro (isbn, titulo, editorial,  autor_id, fecha_publicacion)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO libro (isbn, titulo, autor_id, fecha_publicacion)
+                VALUES (?, ?, ?, ?)
                 """;
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, libro.getIsbn());
             ps.setString(2, libro.getTitulo());
-            ps.setString(3, libro.getEditorial());
-            ps.setInt(4, libro.getAutor().getId());
-            ps.setObject(5, libro.getFechaPublicacion());   // LocalDate → DATE
+            ps.setInt(3, libro.getAutor().getId());
+            ps.setObject(4, libro.getFechaPublicacion());   // LocalDate → DATE
             ps.executeUpdate();
 
             try (ResultSet claves = ps.getGeneratedKeys()) {
@@ -106,16 +105,15 @@ public class LibroRepositoryJdbc implements LibroRepository {
     public void update(Libro libro) {
         String sql = """
                 UPDATE libro
-                SET titulo = ?, editorial = ?, autor_id = ?, fecha_publicacion = ?
+                SET titulo = ?, autor_id = ?, fecha_publicacion = ?
                 WHERE id = ?
                 """;
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, libro.getTitulo());
-            ps.setString(2, libro.getEditorial());
-            ps.setInt(3, libro.getAutor().getId());
-            ps.setObject(4, libro.getFechaPublicacion());
-            ps.setInt(5, libro.getId());
+            ps.setInt(2, libro.getAutor().getId());
+            ps.setObject(3, libro.getFechaPublicacion());
+            ps.setInt(4, libro.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new AccesoDatosException("Error al actualizar el libro " + libro.getIsbn(), e);
@@ -156,7 +154,6 @@ public class LibroRepositoryJdbc implements LibroRepository {
                 rs.getInt("id"),
                 rs.getString("isbn"),
                 rs.getString("titulo"),
-                rs.getString("editorial"),
                 autor,
                 // getObject con el tipo: convierte DATE directamente a LocalDate
                 rs.getObject("fecha_publicacion", LocalDate.class));

@@ -18,14 +18,10 @@ public class LibroService {
     private final LibroRepository libroRepository;
     private final AutorRepository autorRepository;
 
-
-
-    /** Todos los filtros son opcionales. */
     /** Todos los filtros son opcionales: si llega null, ese filtro no se aplica. */
-    public List<Libro> buscar(Integer autorId,String editorial, Integer anioDesde, Integer anioHasta) {
+    public List<Libro> buscar(Integer autorId, Integer anioDesde, Integer anioHasta) {
         return libroRepository.findAll().stream()
                 .filter(l -> autorId == null || l.getAutor().getId().equals(autorId))
-                .filter(l -> editorial == null || l.getEditorial().equals(editorial))
                 .filter(l -> anioDesde == null || l.getFechaPublicacion().getYear() >= anioDesde)
                 .filter(l -> anioHasta == null || l.getFechaPublicacion().getYear() <= anioHasta)
                 .toList();
@@ -67,7 +63,6 @@ public class LibroService {
     // Reglas comunes a crear y actualizar
     private void prepararParaGuardar(Libro libro) {
         libro.setTitulo(libro.getTitulo().trim());
-        libro.setEditorial(libro.getEditorial().trim());
 
         // Regla de negocio: el autor tiene que existir
         Integer autorId = libro.getAutor().getId();
